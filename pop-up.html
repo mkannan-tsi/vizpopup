@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<!-- Styling -->
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+		<link rel='stylesheet' href='http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css' />
+		<style>
+		.center {
+		    margin: 0 auto;
+		    width: 50%;
+		    text-align:center;
+		}
+		
+		.center-div
+		{
+		  margin: 0 auto;
+		  height: 85vh;
+		  width: 80vw;
+		}
+
+		.popup-div
+		{
+			margin: 0 auto;
+			height: 65vh;
+			width: 60vw;
+		}
+
+		.iframeStyle {
+			align: middle;
+			margin: 0 auto;
+			height: 65vh;
+			width: 60vw;
+		}
+		@font-face { font-family: BentonSans; src: url('bentonsans-book.ttf'); } 
+		h1 {
+		font-family: BentonSans;
+		color: #666666;
+		}
+
+		h4 {
+		font-family: BentonSans;
+		color: #666666;
+		}
+		</style>
+
+		<!-- JS imports -->
+		<script src='http://code.jquery.com/jquery-1.8.2.min.js'></script>
+		<script src='http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js'> </script>
+		<script type="text/javascript" src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+
+		<script type="text/javascript">			
+				var viz;
+		        var vizURL = "https://demoapac.tableau.com/t/Presales/views/Superstore_3/Overview?iframeSizedToWindow=true&:embed=y&:showAppBanner=false&:display_count=no&:showVizHome=no&Subcategory=";
+		        
+		        // Initiate the popping up of the div
+		        function popupViz() {
+		        	$( "#popupDiv" ).popup ("open", {history: false});
+		        }
+		        
+		        function popupCloseViz() {
+		           	location.href = "#";
+		        }
+		         
+		        // Define the iframe with the second viz, including the contextual filter
+		        function resizeViz(marks) {
+
+		        	// Determining selection made
+		        	if (marks.length > 0) {
+		        		for (var markIndex=0; markIndex < marks.length; markIndex++) {
+		        			var pairs =	marks[markIndex].getPairs();
+		        			for (var pairIndex=0; pairIndex < pairs.length; pairIndex++) {
+		        				var pair = pairs[pairIndex];
+		        				if (pair.fieldName === "Sub-Category"){
+		        					var finalURL = vizURL + pair.formattedValue;
+		        							        					
+		        					//Cleaning up previous iframe, if it exists
+		        					var iframes = document.querySelectorAll('iframe');
+		        					for (var i = 0; i < iframes.length; i++) {
+		        					    if (iframes[i].id === "vizFrame") {
+		        					    	iframes[i].parentNode.removeChild(iframes[i]);
+		        					    }
+		        					}
+
+		        					// Creating the new iframe
+		        					var iframe = document.createElement('iframe');
+		        					iframe.frameBorder=0;
+		        					iframe.id="vizFrame";
+		        					iframe.setAttribute("class", "iframeStyle")
+		        					iframe.setAttribute("src", finalURL);
+		        					document.getElementById("popupDiv").appendChild(iframe);
+		        				}
+		        			}
+		        		}
+		        		popupViz();
+		        	}	        		       
+		        }        	
+
+		        // Initializing base viz
+		        function initViz() {
+		        	console.log (window.location.href);
+		            var containerDiv = document.getElementById("vizContainer"),
+		                url = "https://demoapac.tableau.com/t/Presales/views/Action/Dashboard1?iframeSizedToWindow=true&:embed=y&:showAppBanner=false&:display_count=no&:showVizHome=no",
+		                options = {
+		                    hideTabs: true,
+		                   
+		                    onFirstInteractive: function () {
+		                        listenToMarksSelection();
+		                    }
+		                };
+		            viz = new tableau.Viz(containerDiv, url, options);
+		        }
+
+		        // Retrieving selected mark
+		        function listenToMarksSelection() {
+		            viz.addEventListener(tableau.TableauEventName.MARKS_SELECTION, onMarksSelection);
+		        }
+
+               	function onMarksSelection(marksEvent) {
+                   return marksEvent.getMarksAsync().then(reportSelectedMarks);
+               	}
+
+               	function reportSelectedMarks(marks) {
+               		resizeViz (marks);
+               	}
+
+		</script>
+			    
+	</head>
+
+    <body onload = "initViz();">  	
+    	<h1 class = "center"> Popup Viz </h1>
+    	<h4 class = "center"> Click on a bar to have a contextual viz pop-up  </h2>
+
+    	<div class="center-div" id="vizContainer"></div>
+
+		<div class = "popup-div" data-role='popup' id='popupDiv' data-overlay-theme='a' data-theme='d' data-tolerance='15,15'> 
+			<a onclick = "popupCloseViz();" id="popup_close" data-role="button" data-theme="a" data-rel = 'back' data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+		</div>
+	</body>
