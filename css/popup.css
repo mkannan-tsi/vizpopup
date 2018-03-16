@@ -1,0 +1,36 @@
+.center {
+    margin: 0 auto;
+    width: 50%;
+    text-align:center;
+}
+
+.center-div
+{
+  margin: 0 auto;
+  height: 85vh;
+  width: 80vw;
+}
+
+.popup-div
+{
+	margin: 0 auto;
+	height: 65vh;
+	width: 60vw;
+}
+
+.iframeStyle {
+	align: middle;
+	margin: 0 auto;
+	height: 65vh;
+	width: 60vw;
+}
+@font-face { font-family: BentonSans; src: url('bentonsans-book.ttf'); } 
+h1 {
+font-family: BentonSans;
+color: #666666;
+}
+
+h4 {
+font-family: BentonSans;
+color: #666666;
+}
