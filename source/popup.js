@@ -1,3 +1,4 @@
+// JS for viz pop-up
 var viz;
 var vizURL = "https://demoapac.tableau.com/t/Presales/views/Superstore_3/Overview?iframeSizedToWindow=true&:embed=y&:showAppBanner=false&:display_count=no&:showVizHome=no&Subcategory=";
 
