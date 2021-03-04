@@ -1,5 +1,5 @@
 var viz;
-var vizURL = "https://demoapac.tableau.com/t/Presales/views/Superstore_3/Overview?iframeSizedToWindow=true&:embed=y&:showAppBanner=false&:display_count=no&:showVizHome=no&Subcategory=";
+var vizURL = "https://public.tableau.com/views/PopUpViz/BaseViz?:language=en&:display_count=y&:origin=viz_share_link&:iframeSizedToWindow=true&:embed=y&:showAppBanner=false&:display_count=no&:showVizHome=no&Subcategory=";
 
 // Initiate the popping up of the div
 function popupViz() {
@@ -48,7 +48,7 @@ function resizeViz(marks) {
 function initViz() {
 	console.log (window.location.href);
     var containerDiv = document.getElementById("vizContainer"),
-        url = "https://demoapac.tableau.com/t/Presales/views/Action/Dashboard1?iframeSizedToWindow=true&:embed=y&:showAppBanner=false&:display_count=no&:showVizHome=no",
+        url = "https://public.tableau.com/views/PopUpViz/PopUpViz?:language=en&:display_count=y&publish=yes&:origin=viz_share_link&:iframeSizedToWindow=true&:embed=y&:showAppBanner=false&:display_count=no&:showVizHome=no",
         options = {
             hideTabs: true,
            
